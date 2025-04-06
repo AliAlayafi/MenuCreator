@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MenuCreator QR Generator</title>
+    <script src="https://cdn.jsdelivr.net/npm/qr-code-styling@1.6.0/lib/qr-code-styling.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@3.9.4/dist/full.css" rel="stylesheet" type="text/css" />
+</head>
+<body class="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
+
+    <!-- Navbar -->
+    <div class="navbar bg-white border-b border-gray-100 px-4 sticky print:absolute top-0 z-50 print:top-0">
+        <div class="flex-1">
+            <a href="/main" class="text-xl font-semibold text-gray-800 hover:text-blue-600 transition-colors">
+                <span class="text-blue-600">Menu</span>Creator
+            </a>
+        </div>
+    </div>
+
+    <div class="container mx-auto px-4 py-8 max-w-2xl mt-16">
+        <!-- Main Card -->
+        <div class="card bg-base-100 shadow-xl print:bg-gradient-to-br from-gray-50 to-gray-100 print:shadow-none">
+            <div class="card-body print:bg-gradient-to-br from-gray-50 to-gray-100 print:shadow-none">
+                <h1 class="card-title text-3xl font-bold text-gray-800 mb-2 print:hidden">QR Code Generator</h1>
+                <p class="text-gray-500 mb-6 print:hidden">Create customizable QR code for your menu</p>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 print:hidden">
+                    <!-- Color Settings -->
+                    <div class="space-y-4">
+                        <div class="form-control">
+                            <label class="label">
+                                <span class="label-text font-medium">QR Color</span>
+                            </label>
+                            <input type="color" id="qrColor" value="#3b82f6" class="input input-bordered w-full h-12 p-1">
+                        </div>
+                        
+                        <div class="form-control">
+                            <label class="label">
+                                <span class="label-text font-medium">Background Color</span>
+                            </label>
+                            <input type="color" id="bgColor" value="#ffffff" class="input input-bordered w-full h-12 p-1">
+                        </div>
+                    </div>
+                    
+                    <!-- Style Settings -->
+                    <div class="space-y-4">
+                        <div class="form-control">
+                            <label class="label">
+                                <span class="label-text font-medium">Dot Style</span>
+                            </label>
+                            <select id="dotStyle" class="select select-bordered w-full">
+                                <option value="square">Square</option>
+                                <option value="rounded" selected>Rounded</option>
+                                <option value="dots">Dots</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-control">
+                            <label class="label">
+                                <span class="label-text font-medium">Eye Style</span>
+                            </label>
+                            <select id="eyeStyle" class="select select-bordered w-full">
+                                <option value="square">Square</option>
+                                <option value="rounded" selected>Rounded</option>
+                                <option value="circle">Circle</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Logo Upload -->
+                <div class="form-control mt-4 print:hidden">
+                    <label class="label">
+                        <span class="label-text font-medium">Upload Logo (optional)</span>
+                    </label>
+                    <input type="file" id="logoUpload" accept="image/png, image/jpeg" class="file-input file-input-bordered w-full">
+                    <label class="label">
+                        <span class="label-text-alt text-gray-400">PNG or JPG recommended (max 1MB)</span>
+                    </label>
+                    <div id="logoPreview" class="mt-2 hidden">
+                        <img id="previewImage" class="max-h-20 mx-auto" src="#" alt="Logo preview">
+                        <button id="removeLogoBtn" class="btn btn-xs btn-error mt-2">Remove Logo</button>
+                    </div>
+                </div>
+                
+                <!-- Action Buttons -->
+                <div class="flex gap-3 mt-6 print:hidden">
+                    <button id="generateBtn" class="btn btn-primary flex-1 gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z" clip-rule="evenodd" />
+                        </svg>
+                        Generate
+                    </button>
+                    <button id="printBtn" class="btn btn-outline btn-secondary flex-1 gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M5 4v3H4a2 2 0 00-2 2v3a2 2 0 002 2h1v2a2 2 0 002 2h6a2 2 0 002-2v-2h1a2 2 0 002-2V9a2 2 0 00-2-2h-1V4a2 2 0 00-2-2H7a2 2 0 00-2 2zm8 0H7v3h6V4zm0 8H7v4h6v-4z" clip-rule="evenodd" />
+                        </svg>
+                        Print
+                    </button>
+                </div>
+                
+                <!-- QR Code Display -->
+                <div class="mt-8 flex flex-col items-center">
+                    <div id="qr-code" class="print:fixed print:inset-0 print:flex print:items-center print:justify-center"></div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Footer -->
+        <div class="text-center text-gray-500 text-sm mt-8 print:hidden">
+            <p>MenuCreator &copy; 2025</p>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+
+            const qrCode = new QRCodeStyling({
+                width: 300,
+                    height: 300,
+                    data: "http://localhost:3000/show/<%=url%>",
+                    dotsOptions: {
+                        color: document.getElementById("qrColor").value,
+                        type: document.getElementById("dotStyle").value
+                    },
+                    backgroundOptions: {
+                        color: document.getElementById("bgColor").value
+                    },
+                    cornersSquareOptions: {
+                        type: document.getElementById("eyeStyle").value,
+                        color: document.getElementById("qrColor").value
+                    },
+                    cornersDotOptions: {
+                        type: document.getElementById("eyeStyle").value,
+                        color: document.getElementById("qrColor").value
+                    }
+            })
+            qrCode.append(document.getElementById("qr-code"));
+
+            // Handle logo upload and preview
+            const logoUpload = document.getElementById('logoUpload');
+            const logoPreview = document.getElementById('logoPreview');
+            const previewImage = document.getElementById('previewImage');
+            const removeLogoBtn = document.getElementById('removeLogoBtn');
+
+            let uploadedLogo = null;
+
+            logoUpload.addEventListener('change', function(e) {
+                const file = e.target.files[0];
+                if (file) {
+                    // Check file size (max 1MB)
+                    if (file.size > 1024 * 1024) {
+                        alert('File size too large! Please upload an image smaller than 1MB.');
+                        logoUpload.value = '';
+                        return;
+                    }
+
+                    const reader = new FileReader();
+                    reader.onload = function(event) {
+                        previewImage.src = event.target.result;
+                        logoPreview.classList.remove('hidden');
+                        uploadedLogo = event.target.result;
+                        generateQRCode();
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+
+            removeLogoBtn.addEventListener('click', function() {
+                logoUpload.value = '';
+                logoPreview.classList.add('hidden');
+                uploadedLogo = false;
+                
+                // Regenerate QR code without logo
+                generateQRCode();
+            });
+
+            function generateQRCode() {
+                let options = {
+                    width: 300,
+                    height: 300,
+                    data: "http://localhost:3000/show/<%=url%>",
+                    dotsOptions: {
+                        color: document.getElementById("qrColor").value,
+                        type: document.getElementById("dotStyle").value
+                    },
+                    backgroundOptions: {
+                        color: document.getElementById("bgColor").value
+                    },
+                    cornersSquareOptions: {
+                        type: document.getElementById("eyeStyle").value,
+                        color: document.getElementById("qrColor").value
+                    },
+                    cornersDotOptions: {
+                        type: document.getElementById("eyeStyle").value,
+                        color: document.getElementById("qrColor").value
+                    }
+                };
+
+                if (uploadedLogo) {
+                    options.image = uploadedLogo;
+                    options.imageOptions = {
+                        hideBackgroundDots: true,
+                        imageSize: 0.2,
+                        margin: 5
+                    };
+                }
+
+                const qrCode = new QRCodeStyling(options)
+                qrCode.append(document.getElementById("qr-code"));
+                qrCode.update(options);
+
+            }
+
+            document.getElementById("generateBtn").addEventListener("click", generateQRCode);
+
+            document.getElementById("printBtn").addEventListener("click", function() {
+                window.print();
+            });
+        });
+    </script>
+</body>
+</html>

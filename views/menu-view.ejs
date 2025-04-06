@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu</title>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans antialiased min-h-screen">
+  <div class="max-w-4xl mx-auto px-4 py-12">
+    <!-- Menu Header -->
+    <header class="text-center mb-16">
+      <h1 class="text-4xl font-bold text-gray-900 mb-3 tracking-tight">
+        <%= menu.name || "Our Menu" %>
+      </h1>
+      <div class="w-20 h-1 bg-amber-400 mx-auto mb-4 rounded-full"></div>
+      <p class="text-gray-600 max-w-2xl mx-auto text-lg">
+        <%= menu.description || "Discover our delicious offerings" %>
+      </p>
+    </header>
+
+    <!-- Section Navigation -->
+    <nav class="sticky top-0 z-10 bg-gray-50/90 backdrop-blur-sm py-4 mb-10 border-b border-gray-200">
+      <div class="flex gap-3 overflow-x-auto px-2 pb-2 scrollbar-hide">
+        <% menu.menu.forEach(section => { %>
+          <a href="#<%= section.name.replace(/\s+/g, '-').toLowerCase() %>" 
+             class="text-sm px-5 py-2 rounded-full bg-white border border-gray-200 hover:bg-amber-100 transition-all whitespace-nowrap font-medium">
+            <%= section.name %>
+          </a>
+        <% }) %>
+      </div>
+    </nav>
+
+    <!-- Menu Sections -->
+    <div class="space-y-12">
+      <% menu.menu.forEach(section => { %>
+        <section id="<%= section.name.replace(/\s+/g, '-').toLowerCase() %>" class="scroll-mt-24">
+          <h2 class="text-2xl font-bold text-gray-900 mb-6">
+            <%= section.name %>
+          </h2>
+
+          <div class="space-y-5">
+            <% section.items.forEach(item => { %>
+              <div class="bg-white rounded-lg p-5 border border-gray-100">
+                <div class="flex justify-between items-start gap-4">
+                  <div>
+                    <h3 class="text-lg font-semibold text-gray-800">
+                      <%= item.name %>
+                    </h3>
+                    <% if(item.description) { %>
+                      <p class="text-sm text-gray-500 mt-1"><%= item.description %></p>
+                    <% } %>
+                  </div>
+                  <span class="text-base font-medium text-amber-600 whitespace-nowrap">
+                    $<%= item.price %>
+                  </span>
+                </div>
+              </div>
+            <% }) %>
+          </div>
+        </section>
+      <% }) %>
+    </div>
+
+    <!-- Footer Note -->
+    <footer class="text-center mt-16 pt-8 border-t border-gray-200">
+      <p class="text-sm text-gray-500">Please inform us of any dietary needs</p>
+      <p class="text-xs text-gray-400 mt-2">&copy; <%= new Date().getFullYear() %> All rights reserved</p>
+    </footer>
+  </div>
+
+  <style>
+    html {
+      scroll-behavior: smooth;    }
+  </style>
+<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</body>
+</html>
