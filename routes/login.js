@@ -15,9 +15,8 @@ router.get('/', (req, res) => {
 
 router.post("/", async (req,res) => {
 
+    const { username, password } = req.body;
     try {
-        const { username, password } = req.body;
-
         const user = await User.findOne({ username });
 
         if (!user)throw new Error("Cridentials are incorrect"); // Check if the user exists in the database
@@ -27,10 +26,10 @@ router.post("/", async (req,res) => {
         if(!isPasswordCorrect)throw new Error("Cridentials are incorrect"); // Check if the password is correct
 
         req.session.userId = user._id;
-        return res.redirect('/main');
+        return res.redirect('/main?alert=Login successful!');
 
     } catch (err) {
-        return res.status(500).render('login', { alert: err.message });
+        return res.status(500).render('login', { alert: err.message, username, password });
     }
 
 

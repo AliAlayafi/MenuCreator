@@ -27,13 +27,13 @@ router.post('/', async (req, res) => {
         req.session.userId = savedUser._id;
 
 
-        return res.render('main', { data:[], alert: "Registerd Successfully."});
+        return res.redirect('/main?alert=Registerd Successfully!');
 
     } catch (error) {
         if(error.errorResponse){
-            return res.render('register', {alert:"The Cradential already exists."});
+            return res.render('register', {alert:"The Cradential already exists.", username, email, password});
         }     
-        return res.render('register', {alert:error.message});
+        return res.render('register', {alert:error.message, username, email, password});
     }
 });
 

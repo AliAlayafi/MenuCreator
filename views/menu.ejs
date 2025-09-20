@@ -3,64 +3,109 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Create Menu</title>
+    <title>Menu Editor - MenuCreator</title>
     <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
-<body class="flex flex-col items-center">
-
+<body class="min-h-screen bg-gray-50 font-inter">
+    <%- include('components/loading') %>
+    
     <input class="message" type="text" value="t" style="display: none;">
 
-    
-    <div class="sticky top-0 navbar bg-base-100 shadow-sm">
-        <div class="flex-1 cursor-pointer">
-            <a href="/main" class="text-xl font-semibold text-gray-800 hover:text-blue-600 transition-colors">
-              <span class="text-blue-600">Menu</span>Creator
-            </a>
-          </div>
-        <div class="flex">
-          <button class="btn btn-soft btn-success mr-2" id="save">Save</button>  
-          <button class="btn btn-primary" id="add-section">+ Section</button>
+    <!-- Header -->
+    <header class="bg-white border-b border-gray-200 sticky top-0 z-40">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo & Back -->
+                <div class="flex items-center space-x-4">
+                    <a href="/main" class="flex items-center space-x-3 hover:opacity-80 transition-opacity">
+                        <div class="w-8 h-8 bg-purple-600 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-arrow-left text-white text-sm"></i>
+                        </div>
+                        <div>
+                            <h1 class="text-lg font-bold text-gray-900">Menu Editor</h1>
+                            <p class="text-xs text-gray-500">Create your digital menu</p>
+                        </div>
+                    </a>
+                </div>
+                
+                <!-- Actions -->
+                <div class="flex items-center space-x-3">
+                    <button id="save" class="flex items-center space-x-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors font-medium cursor-pointer">
+                        <i class="fas fa-save text-sm"></i>
+                        <span>Save</span>
+                    </button>
+                    <button id="add-section" class="flex items-center space-x-2 px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors font-medium cursor-pointer">
+                        <i class="fas fa-plus text-sm"></i>
+                        <span>Add Section</span>
+                    </button>
+                </div>
+            </div>
         </div>
-    </div>
+    </header>
 
-    <div class="w-full h-48 flex justify-center mt-6">
-
-        <div class="flex flex-col items-center justify-center w-4/5 min-h-48 bg-gradient-to-br from-gray-900 to-gray-700 text-center p-10 rounded-xl">
-            <h1 class="text-xl sm:text-2xl font-extrabold text-white tracking-wide drop-shadow-lg">
-                Effortlessly create sections, add items, and arrange them
-            </h1>
-            <h2 class="text-2xl sm:text-3xl font-extrabold text-purple-400 mt-3 animate-pulse drop-shadow-lg">
-                with drag-and-drop
-            </h2>
-            <div class="mt-4 w-16 h-1 bg-purple-400 rounded-full"></div>
+    <!-- Main Content -->
+    <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <!-- Welcome Section -->
+        <div class="mb-8">
+            <div class="bg-gradient-to-r from-purple-600 to-purple-700 rounded-2xl p-8 text-white">
+                <div class="flex items-center space-x-4">
+                    <div class="w-16 h-16 bg-white/20 rounded-2xl flex items-center justify-center">
+                        <i class="fas fa-utensils text-white text-2xl"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-2xl font-bold mb-2">Menu Editor</h1>
+                        <p class="text-purple-100">Create sections, add items, and arrange them with drag-and-drop</p>
+                    </div>
+                </div>
+            </div>
         </div>
 
-    </div>
-    
-    <hr class="mt-10 mb-10 w-4/5">
+        <!-- Editor Container -->
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200">
+            <div class="px-6 py-4 border-b border-gray-100">
+                <div class="flex items-center justify-between">
+                    <h2 class="text-lg font-semibold text-gray-900">Menu Sections</h2>
+                    <div class="flex items-center space-x-2 text-xs text-gray-500">
+                        <i class="fas fa-grip-vertical"></i>
+                        <span>Drag to reorder</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Menu Container -->
+            <div class="p-6">
+                <div id="menu-container" class="space-y-3">
+                    <!-- Sections will be dynamically added here -->
+                </div>
+                
+                <!-- Empty State -->
+                <div id="empty-state" class="text-center py-8">
+                    <div class="w-16 h-16 bg-gray-100 rounded-xl flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-plus text-gray-400 text-2xl"></i>
+                    </div>
+                    <h3 class="text-base font-medium text-gray-900 mb-2">No sections yet</h3>
+                    <p class="text-sm text-gray-500 mb-4">Add your first section to start building your menu</p>
+                    <button id="add-first-section" class="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors font-medium cursor-pointer text-sm">
+                        <i class="fas fa-plus mr-1.5"></i>
+                        Add First Section
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
 
-
-
-    <div class="container w-full flex flex-col items-center max-w-[900px]">
-
-      
-
-    </div>
-
-
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.2/Sortable.min.js"></script>
-<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script src="/js/alert.js"></script> 
-<script src="/js/menu.js"></script>
-<script src="/js/save-menu.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.2/Sortable.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="/js/alert.js"></script> 
+    <script src="/js/menu.js"></script>
+    <script src="/js/save-menu.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 </body>
 </html>
-
 
 <script>
     let data = <%- JSON.stringify(data) %>;

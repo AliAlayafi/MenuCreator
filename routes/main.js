@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { v4: uuidv4 } = require('uuid');
-
+const { validateMenu } = require('../public/js/validate-menu');
 
 const Menu = require('../models/Menu');
 // const User = require('../models/User');
@@ -15,7 +15,7 @@ router.get('/', async (req, res) => {
         if(!req.session.userId) return res.redirect('/login');
 
         const menu = await Menu.find({ id: req.session.userId },"uuid name updatedAt views");
-        return res.render("main", {alert:"",data:menu});
+        return res.render("main", {alert: req.query.alert || "", data:menu});
 
 
     } catch (error) {
@@ -51,6 +51,14 @@ router.post("/:id", async (req, res) => {
         if (!req.session.userId) return res.redirect('/login');
         
         const data = req.body;
+        
+        // Validate menu data before saving
+        if (!validateMenu(data)) {
+            return res.status(400).json({ 
+                status: 400, 
+                message: "Invalid menu data format" 
+            });
+        }
         
         const menu = await Menu.findOne({ id: req.session.userId, uuid: req.params.id });
         if (!menu) throw new Error("Menu not found");

@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 const session = require('express-session');
 require('dotenv').config();
 
-const port = process.env.PORT;
+const port = process.env.PORT || 3000;
 const app = express();
 
 
@@ -64,8 +64,8 @@ const qrcode = require('./routes/qrcode.js')
 app.use("/qrcode",qrcode)
 
 
-// at this moment there is no landing page
-app.get("/", (req,res) => res.redirect("/login"))
+// Landing page
+app.get("/", (req,res) => res.render("index"))
 
 
 
