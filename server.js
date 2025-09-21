@@ -13,8 +13,8 @@ app.set('views', path.join(__dirname, 'views'));
 
 
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(express.json())
-app.use(express.urlencoded({ extended: true}));
+app.use(express.json({ limit: '10mb' }))
+app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
 
 
@@ -63,6 +63,9 @@ app.use("/show",menu)
 const qrcode = require('./routes/qrcode.js')
 app.use("/qrcode",qrcode)
 
+// Menu analysis API
+const analyzeMenu = require('./routes/analyze-menu.js')
+app.use("/", analyzeMenu)
 
 // Landing page
 app.get("/", (req,res) => res.render("index"))

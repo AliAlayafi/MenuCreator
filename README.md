@@ -9,6 +9,9 @@ A modern and flexible web application for restaurants, cafes, and service-based 
 
 ## ✨ Features
 
+- 📸 **Smart Scan - Photo to Digital Menu**  
+  Take a photo of your paper menu and instantly convert it to a digital menu using AI technology. No manual typing required!
+
 - 📝 **Create Multiple Menus**  
   Manage multiple menus for different locations or services.
 
@@ -43,10 +46,23 @@ A modern and flexible web application for restaurants, cafes, and service-based 
 - **Backend:** Node.js (Express)
 - **Frontend:** EJS, Tailwind CSS, DaisyUI
 - **Database:** MongoDB (Mongoose)
+- **AI Integration:** OpenRouter API (GPT-4o mini)
 - **UX Libraries:**  
   - [SortableJS](https://sortablejs.github.io/Sortable/) (Drag & Drop)  
   - [Day.js](https://day.js.org/) (Time formatting)  
   - [SweetAlert](https://sweetalert.js.org/) (Pop-up dialogs)
+
+---
+
+## 🎯 How Smart Scan Works
+
+1. **📸 Take Photo** - Upload a photo of your paper menu
+2. **🤖 AI Analysis** - Our AI reads and extracts all menu items, sections, and prices
+3. **✨ Instant Conversion** - Your photo becomes a fully editable digital menu
+4. **🎨 Customize** - Edit, rearrange, and style your menu as needed
+5. **📱 Share** - Generate QR codes and share with customers
+
+**No more manual typing!** Just snap, scan, and share.
 
 ---
 
