@@ -1,5 +1,5 @@
 <!-- Loading Overlay Component -->
-<div id="loadingOverlay" class="fixed inset-0 bg-white bg-opacity-90 backdrop-blur-sm z-50 flex items-center justify-center">
+<div id="loadingOverlay" class="fixed inset-0 bg-white bg-opacity-90 backdrop-blur-sm z-50 flex items-center justify-center transition-opacity duration-300">
     <div class="text-center">
         <!-- Logo -->
         <div class="w-16 h-16 bg-purple-600 rounded-xl flex items-center justify-center mx-auto mb-6">
@@ -35,6 +35,12 @@
 <script>
     // Hide loading when page is fully loaded (real loading detection)
     window.addEventListener('load', function() {
-        document.getElementById('loadingOverlay').style.display = 'none';
+        const loadingOverlay = document.getElementById('loadingOverlay');
+        if (loadingOverlay) {
+            loadingOverlay.style.opacity = '0';
+            setTimeout(() => {
+                loadingOverlay.style.display = 'none';
+            }, 300);
+        }
     });
 </script>
