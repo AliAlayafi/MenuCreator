@@ -1,115 +1,191 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>QR Code Generator - MenuCreator</title>
-    <script src="https://cdn.jsdelivr.net/npm/qr-code-styling@1.6.0/lib/qr-code-styling.js"></script>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdn.jsdelivr.net/npm/daisyui@3.9.4/dist/full.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.css" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/qr-code-styling@1.6.0/lib/qr-code-styling.js"></script>
 </head>
-<body class="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 font-inter">
+<body class="min-h-screen bg-gradient-to-br from-gray-50 to-white font-inter antialiased" style="visibility: hidden;">
 
-    <!-- Loading Component -->
-    <%- include('components/loading') %>
-
-    <!-- Header -->
-    <div class="bg-white border-b border-gray-100 sticky top-0 z-50 print:hidden">
-        <div class="max-w-6xl mx-auto px-4 py-4">
-            <div class="flex items-center justify-between">
-                <div class="flex items-center space-x-4">
-                    <a href="/main" class="flex items-center space-x-2 text-gray-600 hover:text-purple-600 transition-colors">
-                        <i class="fas fa-arrow-left text-lg"></i>
-                        <span class="font-medium">Back to Dashboard</span>
-                    </a>
+    <!-- Beautiful Navigation -->
+    <nav class="sticky top-0 z-50 print:hidden">
+        <div class="max-w-6xl mx-auto px-6 py-4">
+            <div class="bg-white/95 backdrop-blur-xl rounded-2xl shadow-lg border border-white/20">
+                <div class="flex justify-between items-center px-6 py-4">
+                    <!-- Brand & Back -->
+                    <div class="flex items-center gap-4">
+                        <a href="/main" class="flex items-center gap-3 group">
+                            <div class="w-10 h-10 bg-gradient-to-br from-purple-600 to-indigo-600 rounded-2xl flex items-center justify-center shadow-lg group-hover:shadow-xl transition-all duration-300">
+                                <i class="fas fa-arrow-left text-white"></i>
+                            </div>
+                            <div>
+                                <h1 class="text-xl font-bold text-gray-900">QR Code Generator</h1>
+                                <p class="text-xs text-gray-500">Generate & customize</p>
+                            </div>
+                        </a>
+                    </div>
+                    
+                    <!-- Actions -->
+                    <div class="flex items-center gap-3">
+                        <button id="downloadBtn" class="hidden sm:flex items-center gap-2 px-4 py-2.5 bg-gradient-to-r from-emerald-600 to-teal-600 text-white rounded-xl font-medium hover:from-emerald-700 hover:to-teal-700 transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
+                            <i class="fas fa-download text-sm"></i>
+                            <span>Download</span>
+                        </button>
+                        
+                        <button id="printBtn" class="flex items-center gap-2 px-4 py-2.5 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-xl font-medium hover:from-blue-700 hover:to-purple-700 transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
+                            <i class="fas fa-print text-sm"></i>
+                            <span class="hidden sm:inline">Print</span>
+                        </button>
+                    </div>
                 </div>
-                <div class="flex items-center space-x-2">
-                    <i class="fas fa-qrcode text-purple-600 text-xl"></i>
-                    <h1 class="text-xl font-bold text-gray-800">QR Code Generator</h1>
-                </div>
-                <div class="w-32"></div> <!-- Spacer for centering -->
             </div>
         </div>
-    </div>
+    </nav>
 
     <!-- Main Content -->
-    <div class="max-w-4xl mx-auto px-4 py-8">
+    <main class="max-w-7xl mx-auto px-6 py-10">
+        
+
+        <!-- Content Grid -->
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
             
-            <!-- Settings -->
+            <!-- Customization Panel -->
             <div class="space-y-6 print:hidden">
-                <div class="bg-white rounded-lg p-6 border border-gray-200">
-                    <h2 class="text-lg font-semibold text-gray-800 mb-4">Customize QR Code</h2>
+                <!-- Color Customization -->
+                <div class="bg-white rounded-2xl p-6 shadow-lg border border-gray-100">
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="w-8 h-8 bg-gradient-to-r from-pink-500 to-rose-500 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-palette text-white text-sm"></i>
+                        </div>
+                        <h2 class="text-lg font-semibold text-gray-900">Colors</h2>
+                    </div>
                     
-                    <!-- Colors -->
-                    <div class="space-y-4">
+                    <div class="grid grid-cols-2 gap-4">
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-2">QR Color</label>
-                            <input type="color" id="qrColor" value="#7c3aed" class="w-full h-10 rounded border border-gray-300 cursor-pointer">
+                            <div class="relative">
+                                <input type="color" id="qrColor" value="#7c3aed" class="w-full h-12 rounded-xl border-2 border-gray-200 cursor-pointer focus:border-purple-500 transition-colors">
+                                <div class="absolute inset-0 rounded-xl ring-2 ring-transparent hover:ring-purple-300 transition-all pointer-events-none"></div>
+                            </div>
                         </div>
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-2">Background</label>
-                            <input type="color" id="bgColor" value="#ffffff" class="w-full h-10 rounded border border-gray-300 cursor-pointer">
+                            <div class="relative">
+                                <input type="color" id="bgColor" value="#ffffff" class="w-full h-12 rounded-xl border-2 border-gray-200 cursor-pointer focus:border-purple-500 transition-colors">
+                                <div class="absolute inset-0 rounded-xl ring-2 ring-transparent hover:ring-purple-300 transition-all pointer-events-none"></div>
+                            </div>
                         </div>
                     </div>
+                </div>
 
-                    <!-- Style -->
-                    <div class="grid grid-cols-2 gap-4 mt-4">
+                <!-- Style Customization -->
+                <div class="bg-white rounded-2xl p-6 shadow-lg border border-gray-100">
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="w-8 h-8 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-shapes text-white text-sm"></i>
+                        </div>
+                        <h2 class="text-lg font-semibold text-gray-900">Style</h2>
+                    </div>
+                    
+                    <div class="grid grid-cols-2 gap-4">
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Dot Style</label>
-                            <select id="dotStyle" class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-purple-500">
+                            <label class="block text-sm font-medium text-gray-700 mb-3">Dot Style</label>
+                            <select id="dotStyle" class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-blue-500 focus:outline-none transition-colors bg-gray-50 focus:bg-white">
                                 <option value="square">Square</option>
                                 <option value="rounded" selected>Rounded</option>
                                 <option value="dots">Dots</option>
                             </select>
                         </div>
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Eye Style</label>
-                            <select id="eyeStyle" class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-purple-500">
+                            <label class="block text-sm font-medium text-gray-700 mb-3">Corner Style</label>
+                            <select id="eyeStyle" class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-blue-500 focus:outline-none transition-colors bg-gray-50 focus:bg-white">
                                 <option value="square">Square</option>
                                 <option value="rounded" selected>Rounded</option>
                                 <option value="circle">Circle</option>
                             </select>
                         </div>
                     </div>
+                </div>
 
-                    <!-- Logo -->
-                    <div class="mt-4">
-                        <label class="block text-sm font-medium text-gray-700 mb-2">Logo (Optional)</label>
-                        <input type="file" id="logoUpload" accept="image/png, image/jpeg" class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-purple-500">
-                        <div id="logoPreview" class="mt-2 hidden text-center">
-                            <img id="previewImage" class="max-h-16 mx-auto mb-2" src="#" alt="Logo preview">
-                            <button id="removeLogoBtn" class="text-red-500 hover:text-red-700 text-sm cursor-pointer">Remove Logo</button>
+                <!-- Logo Upload -->
+                <div class="bg-white rounded-2xl p-6 shadow-lg border border-gray-100">
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="w-8 h-8 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-image text-white text-sm"></i>
+                        </div>
+                        <h2 class="text-lg font-semibold text-gray-900">Logo (Optional)</h2>
+                    </div>
+                    
+                    <div class="space-y-4">
+                        <div class="relative">
+                            <input type="file" id="logoUpload" accept="image/png, image/jpeg" class="w-full px-4 py-3 border-2 border-dashed border-gray-300 rounded-xl focus:border-emerald-500 focus:outline-none transition-colors bg-gray-50 hover:bg-gray-100 cursor-pointer">
+                            <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+                                <span class="text-gray-500 text-sm">Choose logo image</span>
+                            </div>
+                        </div>
+                        
+                        <div id="logoPreview" class="hidden">
+                            <div class="flex items-center gap-4 p-4 bg-gray-50 rounded-xl">
+                                <img id="previewImage" class="w-16 h-16 object-cover rounded-lg" src="#" alt="Logo preview">
+                                <div class="flex-1">
+                                    <p class="text-sm font-medium text-gray-700">Logo added</p>
+                                    <button id="removeLogoBtn" class="text-red-600 hover:text-red-700 text-sm font-medium transition-colors">Remove</button>
+                                </div>
+                            </div>
                         </div>
                     </div>
+                </div>
 
-                    <!-- Print Button -->
-                    <div class="mt-6">
-                        <button id="printBtn" class="w-full bg-purple-600 text-white py-2 px-4 rounded font-medium hover:bg-purple-700 transition-colors cursor-pointer">
-                            Print QR Code
-                        </button>
+                <!-- Mobile Actions -->
+                <div class="sm:hidden">
+                    <button id="downloadBtnMobile" class="w-full flex items-center justify-center gap-2 px-6 py-4 bg-gradient-to-r from-emerald-600 to-teal-600 text-white rounded-xl font-semibold shadow-lg">
+                        <i class="fas fa-download"></i>
+                        <span>Download QR Code</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- QR Code Display -->
+            <div class="lg:sticky lg:top-32 h-fit">
+                <div class="bg-white rounded-2xl p-8 shadow-lg border border-gray-100 text-center">
+                    <div class="flex items-center justify-center gap-3 mb-6">
+                        <div class="w-8 h-8 bg-gradient-to-r from-purple-500 to-indigo-500 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-qrcode text-white text-sm"></i>
+                        </div>
+                        <h3 class="text-lg font-semibold text-gray-900">Your QR Code</h3>
+                    </div>
+                    
+                    <div id="qr-code" class="flex justify-center mb-6 print:fixed print:inset-0 print:flex print:items-center print:justify-center">
+                        <!-- QR Code will be generated here -->
+                    </div>
+                    
+                    <div class="space-y-3 print:hidden">
+                        <p class="text-gray-600">Scan to view your menu</p>
+                        <div class="flex items-center justify-center gap-2 text-sm text-gray-500 bg-gray-50 px-4 py-2 rounded-lg">
+                            <i class="fas fa-link text-xs"></i>
+                            <span class="truncate">localhost:3000/show/<%=url%></span>
+                        </div>
                     </div>
                 </div>
             </div>
-
-            <!-- QR Code -->
-            <div class="bg-white rounded-lg p-6 border border-gray-200 text-center">
-                <h3 class="text-lg font-semibold text-gray-800 mb-4">QR Code</h3>
-                <div id="qr-code" class="flex justify-center print:fixed print:inset-0 print:flex print:items-center print:justify-center">
-                    <!-- QR Code will be generated here -->
-                </div>
-                <p class="text-gray-500 text-sm mt-4 print:hidden">Scan to view your menu</p>
-            </div>
         </div>
-    </div>
+    </main>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js"></script>
+    <script src="/js/nprogress-init.js"></script>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             let uploadedLogo = null;
+            let currentQRCode = null;
 
             // Initialize QR Code
             generateQRCode();
@@ -119,9 +195,23 @@
             document.getElementById('bgColor').addEventListener('input', generateQRCode);
             document.getElementById('dotStyle').addEventListener('change', generateQRCode);
             document.getElementById('eyeStyle').addEventListener('change', generateQRCode);
+            
+            // Print functionality
             document.getElementById('printBtn').addEventListener('click', function() {
                 window.print();
             });
+
+            // Download functionality
+            function setupDownloadButton(buttonId) {
+                document.getElementById(buttonId)?.addEventListener('click', function() {
+                    if (currentQRCode) {
+                        currentQRCode.download({ name: "menu-qr-code", extension: "png" });
+                    }
+                });
+            }
+            
+            setupDownloadButton('downloadBtn');
+            setupDownloadButton('downloadBtnMobile');
 
             // Logo upload
             document.getElementById('logoUpload').addEventListener('change', function(e) {
@@ -157,8 +247,8 @@
                 qrContainer.innerHTML = '';
 
                 let options = {
-                    width: 300,
-                    height: 300,
+                    width: 280,
+                    height: 280,
                     data: "http://localhost:3000/show/<%=url%>",
                     dotsOptions: {
                         color: document.getElementById("qrColor").value,
@@ -186,11 +276,46 @@
                     };
                 }
 
-                const qrCode = new QRCodeStyling(options);
-                qrCode.append(qrContainer);
+                currentQRCode = new QRCodeStyling(options);
+                currentQRCode.append(qrContainer);
             }
         });
     </script>
+
+    <style>
+        /* Print styles */
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+            #qr-code, #qr-code * {
+                visibility: visible;
+            }
+            #qr-code {
+                position: fixed;
+                left: 50%;
+                top: 50%;
+                transform: translate(-50%, -50%);
+            }
+        }
+        
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #f8fafc;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(to bottom, #8b5cf6, #7c3aed);
+            border-radius: 4px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(to bottom, #7c3aed, #6d28d9);
+        }
+    </style>
 </body>
-</html>
 </html>

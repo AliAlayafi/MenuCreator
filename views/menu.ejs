@@ -4,118 +4,192 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Menu Editor - MenuCreator</title>
-    <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.css" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="min-h-screen bg-gray-50 font-inter">
-    <%- include('components/loading') %>
+<body class="min-h-screen bg-gradient-to-br from-gray-50 to-white font-inter antialiased" style="visibility: hidden;">
     
     <input class="message" type="text" value="t" style="display: none;">
 
-    <!-- Header -->
-    <header class="bg-white border-b border-gray-200 sticky top-0 z-40">
-        <div class="w-full lg:max-w-7xl lg:mx-auto px-2 sm:px-4 md:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-14 sm:h-16">
-                <!-- Logo & Back -->
-                <div class="flex items-center space-x-2 sm:space-x-4">
-                    <a href="/main" class="flex items-center space-x-2 sm:space-x-3 hover:opacity-80 transition-opacity">
-                        <div class="w-7 h-7 sm:w-8 sm:h-8 bg-purple-600 rounded-lg flex items-center justify-center">
-                            <i class="fas fa-arrow-left text-white text-xs sm:text-sm"></i>
-                        </div>
-                        <div class="hidden sm:block">
-                            <h1 class="text-base sm:text-lg font-bold text-gray-900">Menu Editor</h1>
-                            <p class="text-xs text-gray-500">Create your digital menu</p>
-                        </div>
-                        <div class="sm:hidden">
-                            <h1 class="text-sm font-bold text-gray-900">Menu Editor</h1>
-                        </div>
-                    </a>
-                </div>
-                
-                <!-- Actions -->
-                <div class="flex items-center space-x-1 sm:space-x-3">
-                    <button id="ai-camera" class="flex items-center space-x-1 sm:space-x-2 px-2 sm:px-4 py-1.5 sm:py-2 bg-gradient-to-r from-purple-500 to-indigo-600 text-white rounded-lg hover:from-purple-600 hover:to-indigo-700 transition-colors font-medium cursor-pointer text-xs sm:text-sm shadow-lg">
-                        <i class="fas fa-camera text-xs sm:text-sm"></i>
-                        <span class="hidden sm:inline">Smart Scan</span>
-                    </button>
-                    <button id="save" class="flex items-center space-x-1 sm:space-x-2 px-2 sm:px-4 py-1.5 sm:py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors font-medium cursor-pointer text-xs sm:text-sm">
-                        <i class="fas fa-save text-xs sm:text-sm"></i>
-                        <span>Save</span>
-                    </button>
-                    <button id="add-section" class="flex items-center space-x-1 sm:space-x-2 px-2 sm:px-4 py-1.5 sm:py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium cursor-pointer text-xs sm:text-sm">
-                        <i class="fas fa-plus text-xs sm:text-sm"></i>
-                        <span>Add Section</span>
-                    </button>
+    <!-- Beautiful Navigation -->
+    <nav class="sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto px-6 py-4">
+            <div class="bg-white/95 backdrop-blur-xl rounded-2xl shadow-lg border border-white/20">
+                <div class="flex justify-between items-center px-6 py-4">
+                    <!-- Brand & Back -->
+                    <div class="flex items-center gap-4">
+                        <a href="/main" class="flex items-center gap-3 group">
+                            <div class="w-10 h-10 bg-gradient-to-br from-purple-600 to-indigo-600 rounded-2xl flex items-center justify-center shadow-lg group-hover:shadow-xl transition-all duration-300">
+                                <i class="fas fa-arrow-left text-white"></i>
+                            </div>
+                            <div>
+                                <h1 class="text-xl font-bold text-gray-900">Menu Editor</h1>
+                                <p class="text-xs text-gray-500">Build your digital menu</p>
+                            </div>
+                        </a>
+                    </div>
+                    
+                    <!-- Action Buttons -->
+                    <div class="flex items-center gap-3">
+                        <button id="ai-camera" class="hidden sm:flex items-center gap-2 px-4 py-2.5 bg-gradient-to-r from-emerald-600 to-teal-600 text-white rounded-xl font-medium hover:from-emerald-700 hover:to-teal-700 transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
+                            <i class="fas fa-camera text-sm"></i>
+                            <span>Smart Scan</span>
+                        </button>
+                        
+                        <button id="save" class="flex items-center gap-2 px-4 py-2.5 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-xl font-medium hover:from-blue-700 hover:to-purple-700 transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
+                            <i class="fas fa-save text-sm"></i>
+                            <span class="hidden sm:inline">Save</span>
+                        </button>
+                        
+                        <button id="add-section" class="flex items-center gap-2 px-4 py-2.5 bg-gradient-to-r from-violet-600 to-purple-600 text-white rounded-xl font-medium hover:from-violet-700 hover:to-purple-700 transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
+                            <i class="fas fa-plus text-sm"></i>
+                            <span class="hidden sm:inline">Add Section</span>
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
-    </header>
+    </nav>
 
     <!-- Main Content -->
-    <main class="w-full lg:max-w-6xl lg:mx-auto px-2 sm:px-4 md:px-6 lg:px-8 py-4 sm:py-6 md:py-8">
-        <!-- Welcome Section -->
-        <div class="mb-4 sm:mb-6 md:mb-8">
-            <div class="bg-gradient-to-r from-purple-600 to-purple-700 rounded-xl sm:rounded-2xl p-4 sm:p-6 md:p-8 text-white">
-                <div class="flex items-center space-x-3 sm:space-x-4">
-                    <div class="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 bg-white/20 rounded-xl sm:rounded-2xl flex items-center justify-center">
-                        <i class="fas fa-utensils text-white text-lg sm:text-xl md:text-2xl"></i>
-                    </div>
-                    <div>
-                        <h1 class="text-lg sm:text-xl md:text-2xl font-bold mb-1 sm:mb-2">Menu Editor</h1>
-                        <p class="text-purple-100 text-sm sm:text-base">Create sections, add items, and arrange them with <span class="bg-white/20 px-2 py-1 rounded-lg font-semibold text-white">drag-and-drop</span></p>
-                    </div>
+    <main class="max-w-6xl mx-auto px-6 py-10">
+        
+        <!-- Welcome Header -->
+        <div class="text-center mb-12">
+            <div class="mb-8">
+                <div class="w-20 h-20 bg-gradient-to-br from-blue-100 to-purple-100 rounded-2xl flex items-center justify-center mx-auto shadow-lg">
+                    <i class="fas fa-utensils text-blue-600 text-2xl"></i>
                 </div>
+            </div>
+            
+            <h1 class="text-3xl font-bold text-gray-900 mb-3">Build Your Menu</h1>
+            <p class="text-lg text-gray-600 mb-6">Create sections, add items, and arrange them with drag-and-drop</p>
+            
+            <!-- Quick Actions for Mobile -->
+            <div class="flex flex-col sm:hidden gap-3 mb-8">
+                <button id="ai-camera-mobile" class="flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r from-emerald-600 to-teal-600 text-white rounded-xl font-medium shadow-lg">
+                    <i class="fas fa-camera"></i>
+                    <span>Smart Scan</span>
+                </button>
             </div>
         </div>
 
         <!-- Editor Container -->
-        <div class="bg-white rounded-lg sm:rounded-xl shadow-sm border border-gray-200">
-            <div class="px-3 sm:px-4 md:px-6 py-3 sm:py-4 border-b border-gray-100">
+        <div class="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden">
+            <div class="px-6 py-4 bg-gradient-to-r from-gray-50 to-white border-b border-gray-100">
                 <div class="flex items-center justify-between">
-                    <h2 class="text-base sm:text-lg font-semibold text-gray-900">Menu Sections</h2>
-                    <div class="hidden sm:flex items-center space-x-2 text-xs text-gray-500">
-                        <i class="fas fa-grip-vertical"></i>
+                    <div class="flex items-center gap-3">
+                        <div class="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-500 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-list text-white text-sm"></i>
+                        </div>
+                        <h2 class="text-lg font-semibold text-gray-900">Menu Sections</h2>
+                    </div>
+                    <div class="hidden sm:flex items-center gap-2 text-sm text-gray-500 bg-white px-3 py-1.5 rounded-lg border border-gray-200">
+                        <i class="fas fa-grip-vertical text-xs"></i>
                         <span>Drag to reorder</span>
                     </div>
                 </div>
             </div>
             
             <!-- Menu Container -->
-            <div class="p-3 sm:p-4 md:p-6">
-                <div id="menu-container" class="space-y-3">
+            <div class="p-6">
+                <div id="menu-container" class="space-y-4">
                     <!-- Sections will be dynamically added here -->
                 </div>
                 
-                <!-- Empty State -->
-                <div id="empty-state" class="text-center py-6 sm:py-8">
-                    <div class="w-12 h-12 sm:w-16 sm:h-16 bg-gray-100 rounded-lg sm:rounded-xl flex items-center justify-center mx-auto mb-3 sm:mb-4">
-                        <i class="fas fa-plus text-gray-400 text-lg sm:text-2xl"></i>
+                <!-- Beautiful Empty State -->
+                <div id="empty-state" class="text-center py-16">
+                    <div class="mb-8">
+                        <div class="w-24 h-24 bg-gradient-to-br from-gray-100 to-gray-200 rounded-2xl flex items-center justify-center mx-auto shadow-lg">
+                            <i class="fas fa-utensils text-gray-400 text-3xl"></i>
+                        </div>
                     </div>
-                    <h3 class="text-sm sm:text-base font-medium text-gray-900 mb-1 sm:mb-2">No sections yet</h3>
-                    <p class="text-xs sm:text-sm text-gray-500 mb-3 sm:mb-4">Add your first section to start building your menu</p>
-                    <button id="add-first-section" class="px-3 sm:px-4 py-1.5 sm:py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors font-medium cursor-pointer text-xs sm:text-sm">
-                        <i class="fas fa-plus mr-1 sm:mr-1.5"></i>
-                        Add First Section
-                    </button>
+                    
+                    <h3 class="text-2xl font-bold text-gray-900 mb-3">Start Building Your Menu</h3>
+                    <p class="text-gray-600 mb-8 max-w-md mx-auto leading-relaxed">
+                        Add your first section to begin organizing your menu items. You can always rearrange them later.
+                    </p>
+                    
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                        <button id="add-first-section" class="group relative px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-xl font-semibold shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all overflow-hidden">
+                            <div class="absolute inset-0 bg-gradient-to-r from-blue-700 to-purple-700 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                            <div class="relative flex items-center gap-2">
+                                <i class="fas fa-plus"></i>
+                                <span>Add First Section</span>
+                            </div>
+                        </button>
+                        
+                        <button id="scan-menu-empty" class="group px-8 py-4 bg-white text-gray-700 border-2 border-gray-200 rounded-xl font-semibold hover:border-emerald-300 hover:text-emerald-600 transition-all">
+                            <div class="flex items-center gap-2">
+                                <i class="fas fa-camera group-hover:text-emerald-600 transition-colors"></i>
+                                <span>Scan Existing Menu</span>
+                            </div>
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
     </main>
 
+    <!-- Scripts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.2/Sortable.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="/js/alert.js"></script> 
     <script src="/js/menu.js"></script>
     <script src="/js/save-menu.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js"></script>
+    <script src="/js/nprogress-init.js"></script>
+
+    <script>
+        let data = <%- JSON.stringify(data) %>;
+        
+        // Add mobile camera button functionality
+        document.getElementById('ai-camera-mobile')?.addEventListener('click', () => {
+            document.getElementById('ai-camera').click();
+        });
+        
+        document.getElementById('scan-menu-empty')?.addEventListener('click', () => {
+            document.getElementById('ai-camera').click();
+        });
+    </script>
+
+    <style>
+        /* Enhanced animations */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-8px) rotate(3deg); }
+        }
+        
+        .animate-float {
+            animation: float 4s ease-in-out infinite;
+        }
+        
+        /* Smooth scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #f8fafc;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(to bottom, #8b5cf6, #7c3aed);
+            border-radius: 4px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(to bottom, #7c3aed, #6d28d9);
+        }
+    </style>
 </body>
 </html>
-
-<script>
-    let data = <%- JSON.stringify(data) %>;
-</script>
-
-

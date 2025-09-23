@@ -4,324 +4,381 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard - MenuCreator</title>
-    <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.css" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="min-h-screen bg-gray-50 font-inter">
-    <%- include('components/loading') %>
+<body class="min-h-screen bg-gradient-to-br from-gray-50 to-white font-inter antialiased" style="visibility: hidden;">
     
     <input class="message" type="text" value="<%= alert %>" style="display: none;">
 
-    <!-- Header -->
-    <header class="bg-white border-b border-gray-200 sticky top-0 z-40">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-16">
-                <!-- Logo -->
-                <div class="flex items-center">
-                    <a href="/" class="flex items-center space-x-3 hover:opacity-80 transition-opacity">
-                        <div class="w-10 h-10 bg-purple-600 rounded-xl flex items-center justify-center">
-                            <i class="fas fa-utensils text-white text-lg"></i>
-                        </div>
-                        <div>
-                            <h1 class="text-xl font-bold text-gray-900">MenuCreator</h1>
-                            <p class="text-xs text-gray-500">Digital Menu Platform</p>
-                        </div>
-                    </a>
-                </div>
-                
-                <!-- Actions -->
-                <div class="flex items-center space-x-2 sm:space-x-4">
-                    <button class="create flex items-center justify-center sm:space-x-2 px-2 sm:px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors font-medium cursor-pointer">
-                        <i class="fas fa-plus text-sm"></i>
-                        <span class="hidden sm:inline">Create Menu</span>
-                    </button>
-                    
-                    <!-- User Menu -->
-                    <div class="dropdown dropdown-end">
-                        <div tabindex="0" class="flex items-center space-x-2 cursor-pointer hover:bg-gray-50 rounded-lg p-2">
-                            <div class="w-8 h-8 bg-purple-100 rounded-full flex items-center justify-center">
-                                <i class="fas fa-user text-purple-600 text-sm"></i>
+    <!-- Beautiful Navigation -->
+    <nav class="sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto px-6 py-4">
+            <div class="bg-white/95 backdrop-blur-xl rounded-2xl shadow-lg border border-white/20">
+                <div class="flex justify-between items-center px-6 py-4">
+                    <!-- Brand -->
+                    <div class="flex items-center gap-3">
+                        <a href="/" class="flex items-center gap-3 group">
+                            <div class="w-10 h-10 bg-gradient-to-br from-purple-600 to-indigo-600 rounded-2xl flex items-center justify-center shadow-lg group-hover:shadow-xl transition-all duration-300">
+                                <i class="fas fa-utensils text-white"></i>
                             </div>
-                            <i class="fas fa-chevron-down text-gray-400 text-xs"></i>
+                            <div>
+                                <h1 class="text-xl font-bold text-gray-900">MenuCreator</h1>
+                                <p class="text-xs text-gray-500">Digital Menu Platform</p>
+                            </div>
+                        </a>
+                    </div>
+                    
+                    <!-- Right Actions -->
+                    <div class="flex items-center gap-3">
+                        <button class="create hidden sm:flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-xl font-semibold hover:from-blue-700 hover:to-purple-700 transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
+                            <i class="fas fa-plus text-sm"></i>
+                            <span>Create</span>
+                        </button>
+                        
+                        <!-- User Menu -->
+                        <div class="relative group">
+                            <button class="flex items-center gap-2 hover:bg-gray-50 rounded-xl p-3 transition-all duration-200">
+                                <img src="<%= userAvatar %>" alt="User" class="w-9 h-9 rounded-full ring-2 ring-white shadow-sm">
+                                <i class="fas fa-chevron-down text-gray-400 text-xs transition-transform group-hover:rotate-180"></i>
+                            </button>
+                            
+                            <div class="absolute right-0 top-full mt-2 w-48 bg-white/95 backdrop-blur-xl rounded-2xl shadow-xl border border-white/20 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 transform translate-y-2 group-hover:translate-y-0">
+                                <div class="p-2">
+                                    <a href="/logout" class="flex items-center gap-3 text-red-600 hover:bg-red-50 rounded-xl px-4 py-3 transition-colors font-medium">
+                                        <i class="fas fa-sign-out-alt text-sm"></i>
+                                        <span>Sign Out</span>
+                                    </a>
+                                </div>
+                            </div>
                         </div>
-                        <ul tabindex="0" class="dropdown-content menu p-2 shadow-lg bg-white rounded-xl w-48 mt-2 border border-gray-100">
-                            <li>
-                                <a href="/logout" class="text-red-600 hover:bg-red-50 rounded-lg">
-                                    <i class="fas fa-sign-out-alt mr-2"></i>
-                                    Logout
-                                </a>
-                            </li>
-                        </ul>
                     </div>
                 </div>
             </div>
         </div>
-    </header>
-
+    </nav>
 
     <!-- Main Content -->
-    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <!-- Welcome Section -->
-        <div class="mb-12">
-            <div class="bg-gradient-to-r from-purple-500 to-purple-600 rounded-2xl p-8 text-white">
-                <div class="flex items-center justify-between">
-                    <div>
-                        <h1 class="text-4xl font-bold mb-2">Welcome back!</h1>
-                        <p class="text-purple-100 text-lg">Create and manage your digital menus with ease</p>
-                    </div>
-                    <div class="hidden sm:block">
-                        <button class="create flex items-center space-x-2 px-6 py-3 bg-white text-purple-600 rounded-xl hover:bg-gray-50 transition-all duration-200 font-medium cursor-pointer shadow-lg hover:shadow-xl">
-                            <i class="fas fa-plus text-sm"></i>
-                            <span>New Menu</span>
-                        </button>
-                    </div>
-                </div>
-            </div>
+    <main class="max-w-6xl mx-auto px-6 py-10">
+        
+        <!-- Welcome Header -->
+        <div class="text-center mb-12">
+            <h1 class="text-4xl font-bold text-gray-900 mb-3">
+                Welcome back! 👋
+            </h1>
+            <p class="text-lg text-gray-600">
+                Let's create something amazing today
+            </p>
         </div>
 
         <!-- Quick Stats -->
         <% if(data.length) { %>
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-8">
-                <div class="bg-white rounded-xl p-6 shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
-                    <div class="flex items-center">
-                        <div class="w-12 h-12 bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl flex items-center justify-center shadow-lg">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+                <!-- Menus Stat -->
+                <div class="group relative overflow-hidden bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl p-6 border border-blue-100 hover:border-blue-200 transition-all duration-300 hover:shadow-lg">
+                    <div class="absolute top-0 right-0 w-20 h-20 bg-blue-200 rounded-full opacity-20 transform translate-x-10 -translate-y-10"></div>
+                    <div class="relative flex items-center gap-4">
+                        <div class="w-14 h-14 bg-gradient-to-r from-blue-500 to-blue-600 rounded-xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
                             <i class="fas fa-utensils text-white text-lg"></i>
                         </div>
-                        <div class="ml-4">
-                            <p class="text-sm font-medium text-gray-600">Total Menus</p>
-                            <p class="text-2xl font-bold text-gray-900"><%= data.length %></p>
+                        <div>
+                            <h3 class="text-2xl font-bold text-gray-900"><%= data.length %></h3>
+                            <p class="text-blue-700 font-medium">Total Menus</p>
                         </div>
                     </div>
                 </div>
-                <div class="bg-white rounded-xl p-6 shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
-                    <div class="flex items-center">
-                        <div class="w-12 h-12 bg-gradient-to-br from-green-500 to-green-600 rounded-xl flex items-center justify-center shadow-lg">
+
+                <!-- Views Stat -->
+                <div class="group relative overflow-hidden bg-gradient-to-br from-emerald-50 to-green-50 rounded-2xl p-6 border border-emerald-100 hover:border-emerald-200 transition-all duration-300 hover:shadow-lg">
+                    <div class="absolute top-0 right-0 w-20 h-20 bg-emerald-200 rounded-full opacity-20 transform translate-x-10 -translate-y-10"></div>
+                    <div class="relative flex items-center gap-4">
+                        <div class="w-14 h-14 bg-gradient-to-r from-emerald-500 to-emerald-600 rounded-xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
                             <i class="fas fa-eye text-white text-lg"></i>
                         </div>
-                        <div class="ml-4">
-                            <p class="text-sm font-medium text-gray-600">Total Views</p>
-                            <p class="text-2xl font-bold text-gray-900"><%= data.reduce((sum, menu) => sum + menu.views, 0) %></p>
+                        <div>
+                            <h3 class="text-2xl font-bold text-gray-900"><%= data.reduce((sum, menu) => sum + menu.views, 0) %></h3>
+                            <p class="text-emerald-700 font-medium">Total Views</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- QR Codes -->
+                <div class="group relative overflow-hidden bg-gradient-to-br from-purple-50 to-pink-50 rounded-2xl p-6 border border-purple-100 hover:border-purple-200 transition-all duration-300 hover:shadow-lg">
+                    <div class="absolute top-0 right-0 w-20 h-20 bg-purple-200 rounded-full opacity-20 transform translate-x-10 -translate-y-10"></div>
+                    <div class="relative flex items-center gap-4">
+                        <div class="w-14 h-14 bg-gradient-to-r from-purple-500 to-pink-500 rounded-xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
+                            <i class="fas fa-qrcode text-white text-lg"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-2xl font-bold text-gray-900"><%= data.length %></h3>
+                            <p class="text-purple-700 font-medium">QR Codes</p>
                         </div>
                     </div>
                 </div>
             </div>
         <% } %>
 
-        <!-- Create Button for Mobile -->
-        <div class="mb-8 sm:hidden">
-            <button class="create w-full flex items-center justify-center space-x-2 px-6 py-4 bg-purple-600 text-white rounded-xl hover:bg-purple-700 transition-all duration-200 font-medium cursor-pointer shadow-lg">
-                <i class="fas fa-plus text-sm"></i>
+        <!-- Mobile Create Button -->
+        <div class="mb-10 sm:hidden">
+            <button class="create w-full flex items-center justify-center gap-3 px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-2xl font-semibold shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all">
+                <i class="fas fa-plus"></i>
                 <span>Create New Menu</span>
             </button>
         </div>
 
-        <!-- Menu Cards Section -->
+        <!-- Content Section -->
         <% if(data.length) { %>
-            <div class="mb-8">
+            <!-- Menus Grid -->
+            <div>
                 <div class="flex items-center justify-between mb-8">
-                    <div>
-                        <h2 class="text-2xl font-bold text-gray-900">Your Menus</h2>
-                        <p class="text-gray-600 mt-1">Manage and organize your digital menus</p>
-                    </div>
-                    <div class="flex items-center text-center sm:text-left space-x-2 text-sm text-gray-500 bg-gray-100 px-3 py-1 rounded-full">
-                        <i class="fas fa-utensils"></i>
-                        <span><%= data.length %> menu<%= data.length !== 1 ? 's' : '' %></span>
+                    <h2 class="text-2xl font-bold text-gray-900">Your Menus</h2>
+                    <div class="bg-gray-100 text-gray-600 px-4 py-2 rounded-full text-sm font-medium">
+                        <%= data.length %> menu<%= data.length !== 1 ? 's' : '' %>
                     </div>
                 </div>
+                
+                <!-- Beautiful Menu Cards -->
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    <% data.forEach(url => { %>
-                        <%- include('components/menu-card', { url: url }) %>
+                    <% data.forEach((url, index) => { %>
+                        <div class="group relative bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 border border-gray-100 hover:border-gray-200 transform hover:-translate-y-2">
+                            <!-- Card Background -->
+                            <div class="h-32 bg-gradient-to-br from-<%= ['blue', 'purple', 'emerald', 'pink', 'indigo', 'teal'][index % 6] %>-100 to-<%= ['indigo', 'pink', 'blue', 'purple', 'emerald', 'cyan'][index % 6] %>-100 relative overflow-hidden">
+                                <!-- Floating Shapes -->
+                                <div class="absolute top-4 right-4 w-8 h-8 bg-white/30 rounded-full"></div>
+                                <div class="absolute bottom-6 left-6 w-12 h-12 bg-white/20 rounded-full"></div>
+                                <div class="absolute top-8 left-8 w-4 h-4 bg-white/40 rounded-full"></div>
+                                
+                                <!-- Menu Icon -->
+                                <div class="absolute bottom-4 right-4">
+                                    <div class="w-12 h-12 bg-white/90 backdrop-blur-sm rounded-xl flex items-center justify-center shadow-lg">
+                                        <i class="fas fa-utensils text-<%= ['blue', 'purple', 'emerald', 'pink', 'indigo', 'teal'][index % 6] %>-600"></i>
+                                    </div>
+                                </div>
+                                
+                                <!-- Action Buttons -->
+                                <div class="absolute top-4 left-4 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                    <a href="/qrcode/<%= url.uuid %>" class="w-8 h-8 bg-white/90 rounded-lg flex items-center justify-center hover:bg-white transition-colors">
+                                        <i class="fas fa-qrcode text-gray-700 text-xs"></i>
+                                    </a>
+                                    <button onclick="deleteMenu('<%= url.uuid %>')" class="w-8 h-8 bg-white/90 rounded-lg flex items-center justify-center hover:bg-white hover:text-red-600 transition-colors">
+                                        <i class="fas fa-trash text-gray-700 text-xs"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <!-- Card Content -->
+                            <div class="p-6">
+                                <h3 class="font-bold text-gray-900 text-lg mb-3 group-hover:text-<%= ['blue', 'purple', 'emerald', 'pink', 'indigo', 'teal'][index % 6] %>-600 transition-colors"><%= url.name %></h3>
+                                
+                                <!-- Stats -->
+                                <div class="flex items-center justify-between text-sm text-gray-500 mb-4">
+                                    <div class="flex items-center gap-2">
+                                        <div class="w-2 h-2 bg-emerald-500 rounded-full"></div>
+                                        <span><%= url.views || 0 %> views</span>
+                                    </div>
+                                    <span class="time" data-time="<%= url.updatedAt %>">Recently</span>
+                                </div>
+                                
+                                <!-- Action Buttons -->
+                                <div class="flex gap-2">
+                                    <a href="/main/<%= url.uuid %>" class="flex-1 text-center py-3 bg-gradient-to-r from-<%= ['blue', 'purple', 'emerald', 'pink', 'indigo', 'teal'][index % 6] %>-600 to-<%= ['indigo', 'pink', 'blue', 'purple', 'emerald', 'cyan'][index % 6] %>-600 text-white rounded-xl font-semibold hover:shadow-lg transform hover:-translate-y-0.5 transition-all text-sm">
+                                        Edit
+                                    </a>
+                                    <a href="/show/<%= url.uuid %>" class="flex-1 text-center py-3 bg-white border-2 border-<%= ['blue', 'purple', 'emerald', 'pink', 'indigo', 'teal'][index % 6] %>-200 text-<%= ['blue', 'purple', 'emerald', 'pink', 'indigo', 'teal'][index % 6] %>-600 rounded-xl font-semibold hover:border-<%= ['blue', 'purple', 'emerald', 'pink', 'indigo', 'teal'][index % 6] %>-300 hover:bg-<%= ['blue', 'purple', 'emerald', 'pink', 'indigo', 'teal'][index % 6] %>-50 transition-all text-sm">
+                                        View
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
                     <% }) %>
                 </div>
             </div>
         <% } else { %>
+            <!-- Creative Empty State -->
             <div class="text-center py-20">
-                <div class="w-24 h-24 bg-gradient-to-br from-purple-100 to-purple-200 rounded-3xl flex items-center justify-center mx-auto mb-8 shadow-lg">
-                    <i class="fas fa-utensils text-purple-600 text-4xl"></i>
+                <!-- Animated Icon Container -->
+                <div class="relative mb-8">
+                    <div class="w-24 h-24 bg-gradient-to-br from-blue-100 to-purple-100 rounded-full flex items-center justify-center mx-auto shadow-lg">
+                        <i class="fas fa-utensils text-blue-600 text-3xl"></i>
+                    </div>
+                    
+                    <!-- Floating Elements -->
+                    <div class="absolute -top-2 -right-2 w-6 h-6 bg-yellow-400 rounded-full animate-bounce"></div>
+                    <div class="absolute -bottom-2 -left-2 w-4 h-4 bg-green-400 rounded-full animate-bounce" style="animation-delay: 0.5s;"></div>
+                    <div class="absolute top-6 -right-6 w-3 h-3 bg-pink-400 rounded-full animate-bounce" style="animation-delay: 1s;"></div>
                 </div>
-                <h3 class="text-2xl font-bold text-gray-900 mb-4">Create your first menu</h3>
-                <p class="text-gray-600 mb-8 max-w-md mx-auto">Get started by creating your first digital menu. It's easy and takes just a few minutes!</p>
-                <button class="create inline-flex items-center space-x-2 px-8 py-4 bg-purple-600 text-white rounded-xl hover:bg-purple-700 transition-all duration-200 font-medium cursor-pointer shadow-lg hover:shadow-xl">
-                    <i class="fas fa-plus text-sm"></i>
-                    <span>Create Your First Menu</span>
-                </button>
+                
+                <h3 class="text-2xl font-bold text-gray-900 mb-3">No menus yet</h3>
+                <p class="text-gray-600 mb-10 max-w-md mx-auto leading-relaxed">
+                    Start creating beautiful digital menus for your restaurant. Build from scratch or scan your existing paper menu with AI.
+                </p>
+                
+                <!-- Action Buttons -->
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <button class="create group relative px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-xl font-semibold shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all overflow-hidden">
+                        <div class="absolute inset-0 bg-gradient-to-r from-blue-700 to-purple-700 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                        <div class="relative flex items-center gap-2">
+                            <i class="fas fa-plus"></i>
+                            <span>Create Menu</span>
+                        </div>
+                    </button>
+                    
+                    <button class="group px-8 py-4 bg-white text-gray-700 border-2 border-gray-200 rounded-xl font-semibold hover:border-blue-300 hover:text-blue-600 transition-all">
+                        <div class="flex items-center gap-2">
+                            <i class="fas fa-camera group-hover:text-blue-600 transition-colors"></i>
+                            <span>Scan Paper Menu</span>
+                        </div>
+                    </button>
+                </div>
             </div>
         <% } %>
     </main>
 
+    <!-- Scripts -->
     <script src="https://unpkg.com/dayjs/dayjs.min.js"></script>
     <script src="https://unpkg.com/dayjs/plugin/relativeTime.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="/js/alert.js"></script>    
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <script src="/js/alert.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js"></script>
+    <script src="/js/nprogress-init.js"></script>
 
-    <!-- SweetAlert Custom Styles -->
+    <script>
+        // Alert handling
+        const message = document.querySelector(".message").value;
+        if(message) {
+            alertSuccess(message);
+        }
+
+        // Time formatting
+        dayjs.extend(dayjs_plugin_relativeTime);
+        const elements = document.querySelectorAll('.time');
+        elements.forEach(el => {
+            const date = el.getAttribute('data-time');
+            el.innerText = dayjs(date).fromNow();
+        });
+
+        // Create menu functionality
+        document.querySelectorAll(".create").forEach(btn => {
+            btn.addEventListener("click", () => {
+                Swal.fire({
+                    title: "Create New Menu",
+                    html: `
+                        <div class="text-left">
+                            <label class="block text-sm font-semibold text-gray-700 mb-3">Menu Name</label>
+                            <input type="text" id="menuName" class="w-full px-5 py-4 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-gray-50 focus:bg-white transition-all" placeholder="e.g., Lunch Menu, Dinner Specials" />
+                        </div>
+                    `,
+                    showCancelButton: true,
+                    confirmButtonText: "Create Menu",
+                    cancelButtonText: "Cancel",
+                    background: "#ffffff",
+                    width: "450px",
+                    padding: "2.5rem",
+                    showLoaderOnConfirm: true,
+                    buttonsStyling: false,
+                    customClass: {
+                        confirmButton: 'px-8 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-xl font-semibold hover:from-blue-700 hover:to-purple-700 transition-all mr-3 shadow-lg',
+                        cancelButton: 'px-8 py-3 bg-gray-100 text-gray-700 rounded-xl font-semibold hover:bg-gray-200 transition-all',
+                        popup: 'rounded-2xl shadow-2xl border-0'
+                    },
+                    preConfirm: () => {
+                        const menuName = document.getElementById('menuName').value.trim();
+                        if (!menuName) {
+                            Swal.showValidationMessage('Please enter a menu name');
+                            return false;
+                        }
+                        if (menuName.length < 2) {
+                            Swal.showValidationMessage('Menu name must be at least 2 characters');
+                            return false;
+                        }
+                        return menuName;
+                    }
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        createMenu(result.value);
+                    }
+                });
+            });
+        });
+
+        function createMenu(name) {
+            fetch('/main', {
+                method: 'POST',
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ name })
+            })
+            .then(res => {
+                if (!res.ok) { 
+                    return res.text().then(text => { 
+                        throw new Error(text);
+                    });
+                }
+                return res.json();
+            })
+            .then(data => {
+                location.href = `/main/${data.message}`;
+            })
+            .catch(err => {
+                alertError(err.message);
+            });
+        }
+
+        async function deleteMenu(uuid) {
+            const result = await Swal.fire({
+                title: 'Delete Menu?',
+                text: "This action cannot be undone",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, delete it',
+                cancelButtonText: 'Cancel',
+                buttonsStyling: false,
+                customClass: {
+                    confirmButton: 'px-8 py-3 bg-red-600 text-white rounded-xl font-semibold hover:bg-red-700 transition-all mr-3 shadow-lg',
+                    cancelButton: 'px-8 py-3 bg-gray-100 text-gray-700 rounded-xl font-semibold hover:bg-gray-200 transition-all',
+                    popup: 'rounded-2xl shadow-2xl border-0'
+                }
+            });
+            
+            if (result.isConfirmed) {
+                fetch('/main', {
+                    method: 'DELETE',
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ uuid })
+                })
+                .then(res => {
+                    if (!res.ok) throw new Error();
+                    return res.json();
+                })
+                .then(data => {
+                    alertSuccess("Menu deleted successfully");
+                    setTimeout(() => location.reload(), 1000);
+                })
+                .catch(err => {
+                    alertError("Something went wrong!");
+                });
+            }
+        }
+    </script>
+
     <style>
-        .swal-confirm-btn {
-            background: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%) !important;
-            border: none !important;
-            border-radius: 12px !important;
-            padding: 12px 24px !important;
-            font-weight: 600 !important;
-            font-size: 14px !important;
-            box-shadow: 0 4px 14px 0 rgba(124, 58, 237, 0.3) !important;
-            transition: all 0.2s ease !important;
+        /* Custom animations */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(5deg); }
         }
         
-        .swal-confirm-btn:hover {
-            background: linear-gradient(135deg, #6d28d9 0%, #9333ea 100%) !important;
-            box-shadow: 0 6px 20px 0 rgba(124, 58, 237, 0.4) !important;
-            transform: translateY(-1px) !important;
+        .animate-float {
+            animation: float 6s ease-in-out infinite;
         }
         
-        .swal-cancel-btn {
-            background: linear-gradient(135deg, #ef4444 0%, #f87171 100%) !important;
-            border: none !important;
-            border-radius: 12px !important;
-            padding: 12px 24px !important;
-            font-weight: 600 !important;
-            font-size: 14px !important;
-            box-shadow: 0 4px 14px 0 rgba(239, 68, 68, 0.3) !important;
-            transition: all 0.2s ease !important;
-        }
-        
-        .swal-cancel-btn:hover {
-            background: linear-gradient(135deg, #dc2626 0%, #ef4444 100%) !important;
-            box-shadow: 0 6px 20px 0 rgba(239, 68, 68, 0.4) !important;
-            transform: translateY(-1px) !important;
-        }
-        
-        .swal-popup {
-            border-radius: 20px !important;
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04) !important;
+        /* Smooth scrolling */
+        html {
+            scroll-behavior: smooth;
         }
     </style>
 </body>
 </html>
-
-<!-- Notify -->
-<script>
-  const message = document.querySelector(".message").value;
-  if(message){
-      alertSuccess(message)
-  }
-</script>
-
-<!-- Calc Updated Time -->
-<script>
-  dayjs.extend(dayjs_plugin_relativeTime);
-  const elements = document.querySelectorAll('.time');
-  elements.forEach(el => {
-    const date = el.getAttribute('data-time');
-    el.innerText = 'Updated ' + dayjs(date).fromNow();
-  })
-</script>
-
-<script>
-    
-    document.querySelectorAll(".create").forEach(btn => {
-      btn.addEventListener("click", () => {
-
-        // Alert get the menu name
-        Swal.fire({
-            title: "Create New Menu",
-            html: `
-                <div class="text-left">
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Menu Name</label>
-                    <input type="text" id="menuName" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent" placeholder="Enter menu name" />
-                </div>
-            `,
-            showCancelButton: true,
-            confirmButtonText: "Create Menu",
-            cancelButtonText: "Cancel",
-            confirmButtonColor: "#7c3aed",
-            cancelButtonColor: "#ef4444",
-            background: "#ffffff",
-            color: "#374151",
-            width: "400px",
-            padding: "2rem",
-            showLoaderOnConfirm: true,
-            customClass: {
-                confirmButton: 'swal-confirm-btn',
-                cancelButton: 'swal-cancel-btn',
-                popup: 'swal-popup'
-            },
-            preConfirm: () => {
-                const menuName = document.getElementById('menuName').value.trim();
-                if (!menuName) {
-                    Swal.showValidationMessage('Please enter a menu name');
-                    return false;
-                }
-                if (menuName.length < 2) {
-                    Swal.showValidationMessage('Menu name must be at least 2 characters');
-                    return false;
-                }
-                return menuName;
-            }
-        }).then((result) => {
-            if (result.isConfirmed) {
-                check(result.value);
-            }
-        });
-
-
-    })
-    })
-    
-
-    // POST
-    function check(value) {
-      fetch('/main', {
-        method: 'POST',
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name: value })
-       })
-        .then(res => {
-            if (!res.ok) { 
-              return res.text().then(text => { 
-                throw new Error(text);
-              });
-            }
-            return res.json();
-        })
-        .then(data => {
-            location.href = `/main/${data.message}`;
-        })
-        .catch(err => {
-            alertError(err.message)
-        });
-    
-    }
-
-
-    async function deleteMenu(uuid){
-      const sure = await alertSure();
-      if(sure){
-        fetch('/main', {
-          method: 'DELETE',
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ uuid })
-         })
-          .then(res => {
-              if (!res.ok) throw new Error();
-              return res.json();
-          })
-          .then(data => {
-            alertSuccess("Deleted Successfully.")
-            // Reload page to refresh everything
-            setTimeout(() => {
-                location.reload();
-            }, 1000);
-          })
-          .catch(err => {
-            alertError("Something went wrong.!")
-          });
-      }
-
-    }
-
-
-</script>

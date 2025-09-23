@@ -7,6 +7,10 @@ MONGODB_URI=mongodb://localhost:27017/menucreator
 # Session encryption key (generate with: openssl rand -base64 32)
 SESSION_SECRET=your-session-secret-here
 
+# Google OAuth credentials (get from: https://console.cloud.google.com/)
+GOOGLE_CLIENT_ID=your-google-client-id-here
+GOOGLE_CLIENT_SECRET=your-google-client-secret-here
+
 # OpenRouter API key for Smart Scan feature (get free key at: https://openrouter.ai/)
 OPENROUTER_API_KEY=your-openrouter-api-key-here
 

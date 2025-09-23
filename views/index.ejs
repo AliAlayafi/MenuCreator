@@ -7,6 +7,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -27,10 +28,9 @@
         }
     </style>
 </head>
-<body class="font-inter bg-white">
+<body class="font-inter bg-white" style="visibility: hidden;">
 
-    <!-- Loading Component -->
-    <%- include('components/loading') %>
+    
 
     <!-- Navigation -->
     <nav class="fixed top-0 w-full z-50 bg-white/95 backdrop-blur-sm border-b border-gray-100">
@@ -44,14 +44,14 @@
                 </div>
                 <div class="flex items-center space-x-3 sm:space-x-6" data-aos="fade-left" data-aos-duration="800">
                     <a href="/login" class="text-gray-600 hover:text-gray-900 font-medium transition-colors text-sm sm:text-base">Sign In</a>
-                    <a href="/register" class="gradient-bg text-white px-3 sm:px-6 py-2 sm:py-2.5 rounded-lg sm:rounded-xl font-medium hover:opacity-90 transition-all text-sm sm:text-base">Get Started</a>
+                    <a href="/login" class="gradient-bg text-white px-3 sm:px-6 py-2 sm:py-2.5 rounded-lg sm:rounded-xl font-medium hover:opacity-90 transition-all text-sm sm:text-base">Get Started</a>
                 </div>
             </div>
         </div>
     </nav>
 
     <!-- Hero Section -->
-    <section class="min-h-screen bg-white flex items-center justify-center pt-16 sm:pt-20">
+    <section class="min-h-screen bg-white flex items-center justify-center pt-16 sm:pt-20" id="hero">
         <div class="max-w-6xl mx-auto px-4 sm:px-6 text-center">
             <div class="mb-8 sm:mb-12" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">
                 <h1 class="text-3xl sm:text-5xl md:text-7xl font-bold text-gray-900 mb-6 sm:mb-8 leading-tight">
@@ -66,7 +66,7 @@
             </div>
             
             <div class="flex flex-col sm:flex-row gap-6 justify-center mb-16" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="400">
-                <a href="/register" class="gradient-bg text-white px-8 py-4 rounded-2xl font-bold text-lg hover:opacity-90 transition-all hover-lift">
+                <a href="/login" class="gradient-bg text-white px-8 py-4 rounded-2xl font-bold text-lg hover:opacity-90 transition-all hover-lift">
                     <i class="fas fa-camera mr-2"></i>
                     Start Scanning
                 </a>
@@ -133,7 +133,7 @@
     </section>
 
     <!-- Features Section -->
-    <section class="py-24 bg-white">
+    <section class="py-24 bg-white" id="features">
         <div class="max-w-6xl mx-auto px-6">
             <div class="text-center mb-20" data-aos="fade-up" data-aos-duration="800">
                 <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
@@ -197,7 +197,7 @@
     </section>
 
     <!-- CTA Section -->
-    <section class="py-24 gradient-bg">
+    <section class="py-24 gradient-bg" id="start-scanning">
         <div class="max-w-4xl mx-auto px-6 text-center">
             <h2 class="text-5xl md:text-6xl font-bold text-white mb-6 leading-tight" data-aos="fade-up" data-aos-duration="800">
                 Ready to Transform Your Menu?
@@ -207,7 +207,7 @@
                 Join thousands of restaurants using AI to create digital menus in seconds
             </p>
             
-            <a href="/register" class="bg-white text-purple-700 px-12 py-5 rounded-2xl font-bold text-xl hover:bg-gray-100 transition-all duration-300 hover:-translate-y-1 shadow-2xl inline-flex items-center justify-center" data-aos="fade-up" data-aos-duration="800" data-aos-delay="400">
+            <a href="/login" class="bg-white text-purple-700 px-12 py-5 rounded-2xl font-bold text-xl hover:bg-gray-100 transition-all duration-300 hover:-translate-y-1 shadow-2xl inline-flex items-center justify-center" data-aos="fade-up" data-aos-duration="800" data-aos-delay="400">
                 <i class="fas fa-camera mr-3"></i>
                 Start Scanning Free
             </a>
@@ -236,20 +236,20 @@
                 </div>
                 
                 <div data-aos="fade-up" data-aos-duration="800" data-aos-delay="200">
-                    <h4 class="text-lg font-semibold mb-4 text-gray-900">Product</h4>
+                    <h4 class="text-lg font-semibold mb-4 text-gray-900">Explore</h4>
                     <ul class="space-y-2 text-gray-600">
-                        <li><a href="#" class="hover:text-gray-900 transition-colors">Features</a></li>
-                        <li><a href="#" class="hover:text-gray-900 transition-colors">Pricing</a></li>
-                        <li><a href="#" class="hover:text-gray-900 transition-colors">AI Scanning</a></li>
+                        <li><a href="/#how-it-works" class="hover:text-gray-900 transition-colors">How It Works</a></li>
+                        <li><a href="/#start-scanning" class="hover:text-gray-900 transition-colors">Start Scanning</a></li>
+                        <li><a href="/#hero" class="hover:text-gray-900 transition-colors">AI Scanning</a></li>
                     </ul>
                 </div>
                 
                 <div data-aos="fade-up" data-aos-duration="800" data-aos-delay="300">
-                    <h4 class="text-lg font-semibold mb-4 text-gray-900">Support</h4>
+                    <h4 class="text-lg font-semibold mb-4 text-gray-900">Resources</h4>
                     <ul class="space-y-2 text-gray-600">
-                        <li><a href="#" class="hover:text-gray-900 transition-colors">Help Center</a></li>
-                        <li><a href="#" class="hover:text-gray-900 transition-colors">Contact Us</a></li>
-                        <li><a href="#" class="hover:text-gray-900 transition-colors">Tutorials</a></li>
+                        <li><a href="/#features" class="hover:text-gray-900 transition-colors">QR Code Ready</a></li>
+                        <li><a href="/#features" class="hover:text-gray-900 transition-colors">Easy Editing</a></li>
+                        <li><a href="/#features" class="hover:text-gray-900 transition-colors">View Analytics</a></li>
                     </ul>
                 </div>
                 
@@ -302,6 +302,9 @@
         // Animate counters when page loads
         window.addEventListener('load', animateCounters);
     </script>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js"></script>
+    <script src="/js/nprogress-init.js"></script>
     
     <!-- AOS JavaScript -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>

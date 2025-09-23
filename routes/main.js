@@ -2,54 +2,35 @@ const express = require('express');
 const router = express.Router();
 const { v4: uuidv4 } = require('uuid');
 const { validateMenu } = require('../public/js/validate-menu');
+const { isAuthenticated } = require('../utils/auth');
 
 const Menu = require('../models/Menu');
-// const User = require('../models/User');
 
-
-router.get('/', async (req, res) => {
-
+router.get('/', isAuthenticated, async (req, res) => {
     try {
-        
-
-        if(!req.session.userId) return res.redirect('/login');
-
-        const menu = await Menu.find({ id: req.session.userId },"uuid name updatedAt views");
-        return res.render("main", {alert: req.query.alert || "", data:menu});
-
-
+        const menu = await Menu.find({ id: req.user.id },"uuid name updatedAt views");
+        return res.render("main", {alert: req.query.alert || "", data:menu, userAvatar: req.user.avatar});
     } catch (error) {
-        
+        return res.status(500).send("Internal server error");
     }
-
 });
 
 
-router.get("/:id", async (req, res) => {
-
+router.get("/:id", isAuthenticated, async (req, res) => {
     try {
-
-        if(!req.session.userId) return res.redirect('/login');
-
         //check if the menu exist
-        const menu = await Menu.findOne({ id: req.session.userId, uuid: req.params.id }, "menu" );
+        const menu = await Menu.findOne({ id: req.user.id, uuid: req.params.id }, "menu" );
         if(!menu) throw new Error("Menu not found");
 
         return res.status(200).render("menu",{ data: menu.menu });
-
-
     } catch (error) {
         return res.redirect("/main");
     }
-
 })
 
 
-router.post("/:id", async (req, res) => {
-
+router.post("/:id", isAuthenticated, async (req, res) => {
     try {
-        if (!req.session.userId) return res.redirect('/login');
-        
         const data = req.body;
         
         // Validate menu data before saving
@@ -60,7 +41,7 @@ router.post("/:id", async (req, res) => {
             });
         }
         
-        const menu = await Menu.findOne({ id: req.session.userId, uuid: req.params.id });
+        const menu = await Menu.findOne({ id: req.user.id, uuid: req.params.id });
         if (!menu) throw new Error("Menu not found");
      
         menu.menu = data;
@@ -73,26 +54,17 @@ router.post("/:id", async (req, res) => {
     } catch (error) {
         return res.status(400).json({ status: 400, message: error.message });
     }
-    
-
 })
 
 
 
 
 
-
-
-
-
-
-router.post("/", async (req,res) => {
-
+router.post("/", isAuthenticated, async (req,res) => {
     try {
-
         const { name } = req.body;
 
-        const existingMenu = await Menu.findOne({ id: req.session.userId, name });
+        const existingMenu = await Menu.findOne({ id: req.user.id, name });
 
         if(existingMenu){
             return res.status(404).send("The Menu Already exists.")
@@ -101,7 +73,7 @@ router.post("/", async (req,res) => {
         const uniqueId = uuidv4();
 
         const newMenu = new Menu({
-            id: req.session.userId,
+            id: req.user.id,
             uuid:uniqueId,
             name: name
         });
@@ -112,22 +84,18 @@ router.post("/", async (req,res) => {
             message:uniqueId
         });
 
-
     } catch (error) {
         return res.status(404).send("Error occured");
     }
-
 })
 
 
-router.delete("/", async (req,res) => {
-
+router.delete("/", isAuthenticated, async (req,res) => {
     try {
-
         const { uuid } = req.body;
         
         // check if the uuid for the same user
-        const existingMenu = await Menu.findOne({ id: req.session.userId, uuid });
+        const existingMenu = await Menu.findOne({ id: req.user.id, uuid });
 
         if(!existingMenu){
             return res.status(404).json({
@@ -140,13 +108,11 @@ router.delete("/", async (req,res) => {
             message:"Deleted Successfuly."
         });
 
-
     } catch (error) {
         return res.status(404).json({
             message:"Error occured."
         });;
     }
-
 })
 
 
