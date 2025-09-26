@@ -10,6 +10,7 @@ SESSION_SECRET=your-session-secret-here
 # Google OAuth credentials (get from: https://console.cloud.google.com/)
 GOOGLE_CLIENT_ID=your-google-client-id-here
 GOOGLE_CLIENT_SECRET=your-google-client-secret-here
+GOOGLE_CALLBACK_URL=https://DOMAIN.COM/auth/google/callback
 
 # OpenRouter API key for Smart Scan feature (get free key at: https://openrouter.ai/)
 OPENROUTER_API_KEY=your-openrouter-api-key-here
